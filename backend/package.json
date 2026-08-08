@@ -1,0 +1,36 @@
+{
+  "name": "privacypilot-ai-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Backend API for PrivacyPilot AI, an AI-powered DPDP compliance and consent management platform.",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "lint": "eslint src",
+    "test": "NODE_ENV=test MONGODB_URI=mongodb://127.0.0.1:27017/privacypilot_ai_test JWT_SECRET=test-secret-with-enough-length node --test --test-concurrency=1"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.21.0",
+    "mongoose": "^8.9.5",
+    "morgan": "^1.10.0",
+    "multer": "^2.2.0",
+    "pdf-parse": "^1.1.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.18.0",
+    "nodemon": "^3.1.9"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
