@@ -1,0 +1,57 @@
+services:
+  - type: web
+    name: privacypilot-ai-api
+    runtime: node
+    plan: free
+    region: singapore
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: CLIENT_URL
+        value: https://privacypilot-ai.onrender.com
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_MAX_POOL_SIZE
+        value: 10
+      - key: MONGODB_TIMEOUT_MS
+        value: 15000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: AI_PROVIDER
+        value: openrouter
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_BASE_URL
+        value: https://openrouter.ai/api/v1
+      - key: OPENROUTER_MODEL
+        value: nvidia/nemotron-3-ultra-550b-a55b:free
+      - key: OPENROUTER_FAST_MODEL
+        value: nvidia/nemotron-3-nano-30b-a3b:free
+      - key: OPENROUTER_FALLBACK_MODEL
+        value: nvidia/nemotron-3-nano-30b-a3b:free
+      - key: OPENROUTER_TIMEOUT_MS
+        value: 12000
+      - key: OPENROUTER_MAX_TOKENS
+        value: 1200
+
+  - type: web
+    name: privacypilot-ai
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://privacypilot-ai-api.onrender.com/api
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
